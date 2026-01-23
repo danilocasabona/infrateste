@@ -30,6 +30,13 @@ A autenticação e autorização são realizadas pelo **Amazon Cognito**, enquan
 
 ## 🏗️ Diagrama Final da Arquitetura
 
+> **Visão visual da arquitetura (alto nível)**  
+> A imagem abaixo representa a arquitetura implementada neste repositório, incluindo ALB, ECS Fargate, SQS, RDS, S3 e Cognito.
+>
+> ![Arquitetura Hackathon – The Code Crafters](images/architecture.png)
+>
+> 📌 **Observação:** salve a imagem da arquitetura no caminho `images/architecture.png` dentro deste repositório para que ela seja renderizada corretamente no GitHub.
+
 ```text
 ┌────────────┐
 │  Cliente   │
@@ -43,7 +50,7 @@ A autenticação e autorização são realizadas pelo **Amazon Cognito**, enquan
 │  (HTTP :80)   │
 └─────┬─────────┘
       │
-      ├───────────────┐
+      ├───────────────┐ 
       │               │
       v               v
 ┌───────────────┐   ┌─────────────────┐
@@ -234,11 +241,9 @@ Esses outputs permitem que os serviços sejam configurados **sem hardcode**, man
 
 ---
 
-## 🚀 Passo 5 – Serviços ECS e Load Balancer (Concluído)
+## 🚀 Serviços de Execução e Balanceamento de Carga
 
-Este passo valida a execução real dos microserviços em ambiente cloud, confirmando que a infraestrutura provisionada é funcional ponta a ponta.
-
-Foram criados **ECS Services** para os serviços de Upload e Download, integrados a um **Application Load Balancer (ALB)** com roteamento por path.
+Esta seção descreve os serviços de execução da aplicação e o mecanismo de balanceamento de carga adotado na arquitetura, validando o funcionamento ponta a ponta dos microserviços em ambiente cloud.
 
 ### Serviços Ativos
 
@@ -254,7 +259,7 @@ Foram criados **ECS Services** para os serviços de Upload e Download, integrado
 
 - **hackathon-processor**
   - Serviço assíncrono
-  - `desired_count = 0` (desligado por custo)
+  - `desired_count = 0` (ativado sob demanda)
   - Pode ser escalado sob demanda
 
 ### Load Balancer e Health Checks
