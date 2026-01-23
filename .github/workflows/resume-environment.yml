@@ -1,0 +1,65 @@
+name: Pause Environment (Dev)
+
+on:
+  workflow_dispatch:
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  pause:
+    runs-on: ubuntu-latest
+    env:
+      AWS_REGION: us-east-1
+      AWS_PAGER: ""
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+
+      - name: Configure AWS credentials (OIDC)
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::822619186337:role/hackathon-github-actions-infra
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Pause environment
+        run: |
+          chmod +x scripts/*.sh
+          ./scripts/pause.sh
+
+name: Resume Environment (Dev)
+
+on:
+  workflow_dispatch:
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  resume:
+    runs-on: ubuntu-latest
+    env:
+      AWS_REGION: us-east-1
+      AWS_PAGER: ""
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+
+      - name: Configure AWS credentials (OIDC)
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::822619186337:role/hackathon-github-actions-infra
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Resume environment
+        run: |
+          chmod +x scripts/*.sh
+          ./scripts/resume.sh

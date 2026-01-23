@@ -1,0 +1,7 @@
+# Terraform sensitive vars
+*.auto.tfvars
+terraform.tfvars
+
+# Terraform internals
+.terraform/
+.terraform.lock.hcl
