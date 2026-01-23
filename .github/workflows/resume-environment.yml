@@ -3,16 +3,23 @@ name: Resume Environment
 on:
   workflow_dispatch:
 
+concurrency:
+  group: infra-dev
+  cancel-in-progress: true
+
 permissions:
   id-token: write
   contents: read
 
 jobs:
   resume:
+    name: Resume (Dev)
     runs-on: ubuntu-latest
     env:
       AWS_REGION: us-east-1
       AWS_PAGER: ""
+      TF_IN_AUTOMATION: "true"
+      TF_INPUT: "false"
     steps:
       - name: Checkout
         uses: actions/checkout@v4

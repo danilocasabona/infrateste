@@ -3,16 +3,23 @@ name: Pause Environment
 on:
   workflow_dispatch:
 
+concurrency:
+  group: infra-dev
+  cancel-in-progress: false
+
 permissions:
   id-token: write
   contents: read
 
 jobs:
   pause:
+    name: Pause (Dev)
     runs-on: ubuntu-latest
     env:
       AWS_REGION: us-east-1
       AWS_PAGER: ""
+      TF_IN_AUTOMATION: "true"
+      TF_INPUT: "false"
     steps:
       - name: Checkout
         uses: actions/checkout@v4
