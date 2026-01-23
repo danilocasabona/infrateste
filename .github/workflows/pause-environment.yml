@@ -1,4 +1,4 @@
-name: Pause Environment (Dev)
+name: Pause Environment
 
 on:
   workflow_dispatch:
